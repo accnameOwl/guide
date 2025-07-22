@@ -47,5 +47,6 @@ mob
 ```
 
 This will be our player for today, and his name is 'Average Joe'.
-> [!IMPORTANT] By default, `mob.client` is set to `null`. Though, should a client connect to the server and a mob is attached to it, `mob.Login()` is called -> `mob.client` is then set to your client,  instead of `null`.
+> [!IMPORTANT]
+> By default, `mob.client` is set to `null`. Though, should a client connect to the server and a mob is attached to it, `mob.Login()` is called -> `mob.client` is then set to your client,  instead of `null`.
 
