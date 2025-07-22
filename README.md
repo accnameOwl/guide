@@ -9,7 +9,7 @@ ____ __ __ ___ _ ____
 |____/|_| |_| \___/\/ \___/|____/
 ```
 
-### INTRODUCTION
+## INTRODUCTION
 Welcome!
 I assume you opened this tutorial post to read some about HTML, Javascript, Browser() and such. **Great!** You have come to the right place. This tutorial will describe to you the bridge between browser content and in-game data
 
@@ -24,7 +24,7 @@ This tutorial will be somewhere within the lower range of intermediate difficult
 - Optimizing runtime efficiency by applying critical thinking and `world.tick()` and `buffer`
 - Debugging your HTML and JS functions.
 
-### CONTENTS
+## CONTENTS
 - The Relation between DreamMaker and Javascript
 - Data Referencing
 - Browse & Output
@@ -33,7 +33,7 @@ This tutorial will be somewhere within the lower range of intermediate difficult
 - Debugging & Tools
 
 
-### The Relation between DreamMaker and Javascript
+## The Relation between DreamMaker and Javascript
 DreamMaker uses browser, an interface window, as a form of browser-based interaction with players. The browser window accepts HTML code by default, which means you can directly output HTML data to a desired browser window.
 
 Though diving through the reference can seem a bit overwhelming to the average Joe, fret not. Once you understand the principles, the process becomes self-explanatory.
