@@ -29,7 +29,7 @@ _though we will discuss `browse()` more in detail later_
 Essentially, DreamMaker isn't concerned with data's content, it only cares for where to put it. The `"window.browser"` element on the other hand do care about _data_. It takes whatever is inside _data_ and renders it as any web browser does. It accepts HTML, CSS and JS by default. Our job is to format _data_ to our needs. 
 Lets create an example:
 > [!IMPORTANT]
-> .dmf interface information:
+> .dmf info:
 > `window1="is-visible=0,is-default=0"`, 
 > `window1.browser1="is-visible=0, is-default=0"`
 ```c
