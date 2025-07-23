@@ -30,8 +30,8 @@ Essentially, DreamMaker isn't concerned with data's content, it only cares for w
 Lets create an example:
 > [!IMPORTANT]
 > .dmf interface information:
-> window1="is-visible=0,is-default=0"
-> window1.browser1="is-visible=0, is-default=0"
+> `window1="is-visible=0,is-default=0"`, 
+> `window1.browser1="is-visible=0, is-default=0"`
 ```c
 client
 	verb
