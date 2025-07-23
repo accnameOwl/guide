@@ -32,11 +32,6 @@ _though we will discuss `browse()` more in detail later._
 Essentially, DreamMaker isn't concerned with data's content, it only cares for where to put it. The `"window1.browser1"` element on the other hand do care about _data_. It takes whatever is inside _data_ and renders it as any web browser does. It accepts HTML, CSS and JS by default. Our job becomes to format _data_ to create a valid html document, tailored to our needs.
 
 **Lets create an example:**
-> [!NOTE]
-> Make note of how we stay in `client` type. More on this later...
->
-> `<!DOCTYPE html>` is a **requirement** at the top of our documents.
-
 ```c
 mob
 	Login()
@@ -60,6 +55,10 @@ client
 			winset(src, "window1", "is-visible=true")
 			src << browse(body, "window=window1")
 ```
+> [!NOTE]
+> Make note of how we stay in `client` type. More on this later...
+>
+> `<!DOCTYPE html>` is a **requirement** at the top of our documents.
 
 Great! Now we need some **Javascript!**
 Let's create a function were we _change_ the value of usr name. To accomplish this, we need two things: A hook for Javascript to recognize and change, and the Javascript function.
