@@ -34,6 +34,7 @@ Essentially, DreamMaker isn't concerned with data's content, it only cares for w
 **Lets create an example:**
 > [!NOTE]
 > Make note of how we stay in `client` type. More on this later...
+>
 > `<!DOCTYPE html>` is a **requirement** at the top of our documents.
 
 ```c
