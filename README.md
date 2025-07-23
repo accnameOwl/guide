@@ -65,9 +65,7 @@ client
 				</html>
 			"}
 ```
-> [!TIP] 
-> usr is recognized as whoever uses the verb, in this case `src.client`.
-> 
+
 **How does it work?**
 Lets compose the code and run:
 ```c
@@ -80,7 +78,7 @@ client
 		test_browser()
 			set name = "Browse"
 			
-			var/body += {"
+			var/body = {"
 				<!DOCTYPE html>
 				<html>
 					<head>
@@ -90,6 +88,33 @@ client
 					</body>
 				</html>
 			"}
-			winset(usr, "window1", "is-visible=true")
-			usr << browse(body, "window=window1")
+			winset(src, "window1", "is-visible=true")
+			src << browse(body, "window=window1")
+```
+
+Great! Now we need some **Javascript!**
+Let's create a function were we _change_ the value of usr name. To accomplish this, we need two things: A hook for Javascript to recognize and change, and the Javascript function.
+Lets look at the html code.
+```html
+<--var/body-->
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+		<div>Hello <span id="user-name">[usr.name]</span></div>
+		<script>
+			
+			function ChangeName(new_name) {
+				getElementById("user-name").innerHTML = new_name;
+			}
+			
+		</script>						
+	</body>
+</html>
+```
+Then we need something that calls that JS function from DreamMaker. This is were `output()` comes in...
+```c
+
+
 ```
