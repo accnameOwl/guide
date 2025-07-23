@@ -12,14 +12,14 @@
 Welcome!
 
 ## CONTENTS
-- The Relation between DreamMaker and Javascript
-- Data Referencing
-- Browse & Output
-- Server to Client
-- Runtime Concerns
-- Debugging & Tools
+1. The Relation between DreamMaker and Javascript
+2. Data Referencing
+3. Browse & Output
+4. Server to Client
+5. Runtime Concerns
+6. Debugging & Tools
 
-## The Relation between DreamMaker and Javascript
+## 1: The Relation between DreamMaker and Javascript
 > [!IMPORTANT]
 > .dmf info:
 > `window1="is-visible=0,is-default=0"`, 
@@ -67,7 +67,8 @@ client
 ```
 > [!TIP] 
 > usr is recognized as whoever uses the verb, in this case `src.client`.
-
+> 
+**How does it work?**
 Lets compose the code and run:
 ```c
 mob
@@ -92,5 +93,3 @@ client
 			winset(usr, "window1", "is-visible=true")
 			usr << browse(body, "window=window1")
 ```
-
-**How does it work**
