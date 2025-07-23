@@ -104,11 +104,9 @@ Lets look at the html code.
 	<body>
 		<div>Hello <span id="user-name">[usr.name]</span></div>
 		<script>
-			
 			function ChangeName(new_name) {
-				getElementById("user-name").innerHTML = new_name;
+				document.getElementById("user-name").innerHTML = new_name;
 			}
-			
 		</script>						
 	</body>
 </html>
