@@ -28,7 +28,7 @@ Welcome!
 > `window1.browser1="is-visible=0, is-default=0"`
 > 
 In large part, browsing HTML documents to clients is essentially "Take this text" and "send to 'this' client". The client recieves the payload, along with a task description.
-It looks like `(client) << browse(data, "window.browser", params)`. `browse()` tells `client` what to do with `data`, and acts as the task descriptor.
+It looks like `(client) << browse(data, "window1.browser1", params=null)`. `browse()` is the task descriptor, which tells `client` to browse `data` with the interface element `window1.browser1`.
 _though we will discuss `browse()` more in detail later_
 
 Essentially, DreamMaker isn't concerned with data's content, it only cares for where to put it. The `"window.browser"` element on the other hand do care about _data_. It takes whatever is inside _data_ and renders it as any web browser does. It accepts HTML, CSS and JS by default. Our job is to format _data_ to our needs. 
