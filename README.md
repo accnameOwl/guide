@@ -2,51 +2,53 @@
 # Tutorial: A Bridge Between DM and JS
 
 ```
-____ __ __ ___ _ ____  
-| _ \| \/ | ( _ ) | / ___|  
-| | | | |\/| | / _ \/\ _ | \___ \  
-| |_| | | | | | (_> < | |_| |___) |  
-|____/|_| |_| \___/\/ \___/|____/
+    ____  __  ___   ___            _______
+   / __ \/  |/  /  ( _ )          / / ___/
+  / / / / /|_/ /  / __ \/|   __  / /\__ \ 
+ / /_/ / /  / /  / /_/  <   / /_/ /___/ / 
+/_____/_/  /_/   \____/\/   \____//____/  
+                                         
 ```
 
 ## INTRODUCTION
 Welcome!
-I assume you opened this tutorial post to read some about HTML, Javascript, Browser() and such. **Great!** You have come to the right place. This tutorial will describe to you the bridge between browser content and in-game data
-
-This tutorial will be somewhere within the lower range of intermediate difficulty. It is expected of you to know what datums are, relationships between objects and object data, proc, verbs and 'some' interface knowledge-primarely about browsers. We will not discuss much about the interface within this tutorial. It is recommended you teach yourself HTML and CSS. CSS is the only tool which _really_ changes your HTML document from amateur to professional. __NOTE: Need to add more as the content grows__
-
-##### You will learn about:
-- How to properly use `Browse()` and `Output()`
-- Building an HTML document with DreamMaker.
-- Update HTML element content with in-game data.
-- What is the server-client communication of `Browse()` and `Output()`.
-- Theory around `Browse_rsc()`.
-- Optimizing runtime efficiency by applying critical thinking and `world.tick()` and `buffer`
-- Debugging your HTML and JS functions.
 
 ## CONTENTS
 - The Relation between DreamMaker and Javascript
 - Data Referencing
 - Browse & Output
-- Server to Client latency
+- Server to Client
 - Runtime Concerns
 - Debugging & Tools
 
-
 ## The Relation between DreamMaker and Javascript
-DreamMaker uses browser, an interface window, as a form of browser-based interaction with players. The browser window accepts HTML code by default, which means you can directly output HTML data to a desired browser window.
+In large part, browsing HTML documents to clients is essentially "Take this text" and "send to 'this' client". The client recieves the payload, along with a task description.
+It looks like `(client) << browse(data, "window.browser", params)`
+_though we will discuss `browse()` more in detail later_
 
-Though diving through the reference can seem a bit overwhelming to the average Joe, fret not. Once you understand the principles, the process becomes self-explanatory.
+Essentially, DreamMaker isn't concerned with data's content, it only cares for where to put it. The `"window.browser"` element on the other hand do care about _data_. It takes whatever is inside _data_ and renders it as any web browser does. It accepts HTML, CSS and JS by default. Our job is to format _data_ to our needs. 
+Lets create an example:
+> [!IMPORTANT]
+> .dmf interface information:
+> window1="is-visible=0,is-default=0"
+> window1.browser1="is-visible=0, is-default=0"
+```c
+client
+	verb
+		test_browser()
+			set name = "Browse"
+			
+			// Document data displayed by browser
+			// This will be our HTML builder datapoint.
+			var/doc_data = ""
+			
+			// We can add html formatted strings to our HTML build data.
+			doc_data += {"
+				<!DOCTYPE html>
+			"}
+```
+> [!NOTE]
+> Make note of how we stay in `client` type, instead of `mob`. More on this later...
+
 
 **How does it work**
-You start off by visualizing whatever you want to display through the browser, to the player. Then you transcribe your imaginary page to HTML. Today, we will make something simple: "Hello world", followed by the players name, exclamation mark.
-
-```js
-mob
-	name = "Average Joe"
-```
-
-This will be our player for today, and his name is 'Average Joe'.
-> [!IMPORTANT]
-> By default, `mob.client` is set to `null`. Though, should a client connect to the server and a mob is attached to it, `mob.Login()` is called -> `mob.client` is then set to your client,  instead of `null`.
-
