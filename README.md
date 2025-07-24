@@ -178,7 +178,7 @@ client
 ## Tips & Hints
 <details>
   <summary>BYOND Web Interface</summary>
-	BYOND.command("verb arg1 arg2 ...");
-	BYOND.winset("id=control_id&property=value&...");
-	BYOND.winget("callback=js_cb&id=control_id&property=is-checked,size,background-color");
+	`BYOND.command("verb arg1 arg2 ...");`<br>
+	`BYOND.winset("id=control_id&property=value&...");`<br>
+	`BYOND.winget("callback=js_cb&id=control_id&property=is-checked,size,background-color");`
 </details>
