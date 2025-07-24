@@ -102,7 +102,8 @@ Let us construct an example which changes inner contents of a tag, then responds
 	</body>
 </html>
 ```
-> [!IMPORTANT] Encode/Decode data between DreamMaker to Browser!
+> [!IMPORTANT]
+> **Encode/Decode data between DreamMaker to Browser!** <br>
 > Encoding between DreamSeeker & Webview2(browser) is essential to ensure special characters are escaped.
 >> BYONDs web interface encodes by default.
 
@@ -195,17 +196,20 @@ client
 ## Browse() & Output()
 Let us delve a bit deeper into things and talk about key features and differences between `browse()` and `output()`.
 
-> [!NOTE] **Browse(content, control_id, params)**
+> [!NOTE]
+> **Browse(content, control_id, params)** <br>
 > The primary feature to browse, surprisingly, has very little to do with browsers. The main use-case is to open/build a new window frame, interact with already existing windows or send cache files. The main reason to why `browse()` is used in our example, and why it is great in our case--it both builds a window and outputs data.
 
-> [!NOTE] **output(msg, control)**
+> [!NOTE]
+> **output(msg, control)** <br>
 > The key feature to output is as self explanatory as the function name itself. It acts as a bridge between the game and the interface. It outputs any message as text to potentially any part of your skin. However, it also supports function calls to browsers, which is a key function we need to bridge the gap between the game and HTML content.
 
 **Are they really functions, though?** Actually, no. They are **instructions**. They explain to the client what do to with given information, thus computing happens client-side, not server-side.
 
 A very important use of `browse()`, which is often overlooked is caching files to clients. 
 
-> [!NOTE] Client
+> [!NOTE]
+> **Client** <br>
 > In the context of this topic we are referring to the client, not the type `/client`. 
 
 
