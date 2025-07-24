@@ -149,12 +149,14 @@ Before we make that happen, we need to tailor our document a bit more. We need a
 > [!TIP]
 > DM allows the use of special characters in stringblocks as such: `@{""}`
 
+
+```html
+<!-- We update our tags by adding <img></img>  -->
+<div><img id='user-appearance'></img>Name: <span id='user-name'>[usr.name]</span></div>
+```
+
 ```js
-var/body = {"
-	...
-		<div><img id='user-appearance'></img>Name: <span id='user-name'>[usr.name]</span></div>
-"}
-body += @{"
+@{"
 	...
 	<script>
 		function setValueById(param) {
