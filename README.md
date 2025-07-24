@@ -125,6 +125,7 @@ client
 This should output `browser callback: id 'user-name' has been changed to '[new_name]'`.
 
 
+</details>
 
 <details>
   <summary>## 2. Data Referencing</summary>
@@ -197,6 +198,7 @@ client
 			src << output(JS("user-name"=new_name, "user-appearance"="\ref[m.appearance]"), "window1.browser1:changeValueById")
 ```
 
+</details>
 
 <details>
   <summary>## Browse() & Output()</summary>
@@ -221,6 +223,9 @@ A very important use of `browse()`, which is often overlooked is caching files t
 
 
 The main difference, and what tells them apart, is `Browse()` is mostly used to "create" or "open" a new windowframe,. `output()` is used to communicate with a browser which is already created.
+</details>
+
+
 ## Tips & Hints
 <details>
   <summary>BYOND Web Interface</summary>
