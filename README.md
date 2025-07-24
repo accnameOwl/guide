@@ -56,13 +56,17 @@ client
 			winshow(src, "window1", 1)
 ```
 > [!NOTE]
-> Make note of how we stay in `client` type. More on this later...
->
-> `<!DOCTYPE html>` is a **requirement** at the top of our documents.
+> - Make note of how we stay in `client` type. More on this later...
+> - `<!DOCTYPE html>` is a **requirement** at the top of our documents.
 
 Great! Now we need some **Javascript!**
-Let's create a function were we _change_ the value of usr name. To accomplish this, we need two things: A html hook for Javascript to recognize and change, and a function wich edits within the hook.
-Lets look at the html code.
+Let's create a function were we _change_ the value of usr name. 
+To accomplish this, we need two things: 
+- A html hook for Javascript to recognize and change
+- A function wich edits within the hook.
+
+We create a hook by using element id. `element.id` is an identifier specific to one element.Javascript returns an element by using `document.getElementById()`. With DreamMaker there is a flaw which should be known. `const elem = document.getElementById("_e");elem.innerHTML="I do not change innerHTML of element '_e'"`. You have to make statements directly to the returned value, i.e document.getElementById("_e").innerHTML = "DOES change innerHTML".
+
 ```html
 <!--var/body-->
 <!DOCTYPE html>
