@@ -9,7 +9,7 @@
 ```                                      
 
 ## INTRODUCTION
-Welcome!
+> [!WARNING] Create an introduction
 
 ## CONTENTS
 1. The Relation between DreamMaker and Javascript
@@ -28,10 +28,13 @@ Welcome!
 
 In large part, browsing HTML documents to clients is essentially "Take this text" and "send to 'this' client". The client recieves the payload, along with a task description.
 It looks like `(client) << browse(data, "window.browser", params=null)`. 
-> `browse()` `data` in `"window1.browser1` to `client`.
+ `browse()` `data` in `"window1.browser1` to `client`.
 _though we will discuss `browse()` more in detail later._
 
-With exception of building the HTML file, DreamMaker isn't concerned about were to put content, it only cares for which window and browser to use. The browser on the other hand do care about the data-content. It takes whatever is inside _data_ and renders it as any web browser does. It accepts HTML, CSS and JS by default. **Our** job is to combine DM and JS to format _data_ and create a valid html document, tailored to our needs.
+With exception of building the HTML file, DreamMaker isn't concerned about were to put content, it only cares for which window and browser to use. The browser on the other hand do care about the data-content. It takes whatever is inside _data_ and renders it as any web browser does. It accepts HTML, CSS and JS by default. **Our** job is to combine DM and JS to format _data_ and create a valid html document, tailored to our needs
+> [!CAUTION] Rewrite me
+
+
 
 **Lets create an example:**
 ```c
@@ -58,7 +61,7 @@ client
 			src << browse(body, "window=window1.browser1")
 			winshow(src, "window1", 1)
 ```
-> [!NOTE]
+> [!NOTE] 
 > - We are making browser interraction `client`-specific. _More on this later..._
 > - `<!DOCTYPE html>` is a **requirement** to all HTML documents.
 
@@ -66,10 +69,10 @@ Great! Now we need some **Javascript!**
 Let's create a function were we _change_ the value of `usr.name`. <br>
 To accomplish this, we need two things: 
 - A html hook for Javascript to recognize.
-- Get ourselfs a proper html element we can apply changes to.
+- Get ourselves a proper html element we can apply changes to.
 - A function which applies desired changes to our html element.
 
-With javascript we can hook to an element by identifying tag(`<></>`) ids. `(tag).id` is a unique identifier we use to recognize specific elements. <br>
+With Javascript we can hook to an element by identifying tag(`<></>`) ids. `(tag).id` is a unique identifier we use to recognize specific elements. <br>
 `getElementById()` looks for a tag within the document that has the specified id, and returns it as an element.
 
 Let us construct an example which changes inner contents of a tag, then responds back to the client with a interface "command".
@@ -98,15 +101,11 @@ Let us construct an example which changes inner contents of a tag, then responds
 	</body>
 </html>
 ```
-> [!TIP]
-> Encode/Decode data between DreamMaker to Browser!<br>
+> [!IMPORTANT] Encode/Decode data between DreamMaker to Browser!
 > Encoding between DreamSeeker & Webview2(browser) is essential to ensure special characters are escaped.<br>
-> **Example:**<br>
-> - no encoding:`space="%20"`<br>
-> - with encoding: `space=" "`<br>
-> (!) The BYOND web interface already does this for you.
+>>  BYONDs web interface encodes by default.
 
-Let us take a look at DreamMaker's side of things.<br>
+Let us take a look at DreamMakers side of things.<br>
 Introducing `output()` to the equation, we can specifically call functions within the browsed document. 
 ```c
 // JS(...) helps us pass multiple arguments as a single string.
@@ -179,7 +178,7 @@ body += @{"
 "}
 ```
 > [!TIP]
-> The HTML document inherits sizes from images by default. Icon of size 32x32 is rendered 32x32px in the browser.
+> Image size is inherited by default. Icon size of 32x32 results in an image 32x32px.
 
 ```c
 #define JS(T...) list2params(list(T))
@@ -191,6 +190,25 @@ client
 			src << output(JS("user-name"=new_name, "user-appearance"="\ref[m.appearance]"), "window1.browser1:changeValueById")
 ```
 
+
+## Browse() & Output()
+Let us delve a bit deeper into things and talk about key features and differences between `browse()` and `output()`.
+
+> [!NOTE] **Browse(content, control_id, params)**
+> The primary feature to browse, surprisingly, has very little to do with browsers. The main use-case is to open/build a new window frame, interact with already existing windows or send cache files. The main reason to why `browse()` is used in our example, and why it is great in our case--it both builds a window and outputs data.
+
+> [!NOTE] **output(msg, control)**
+> The key feature to output is as self explanatory as the function name itself. It acts as a bridge between the game and the interface. It outputs any message as text to potentially any part of your skin. However, it also supports function calls to browsers, which is a key function we need to bridge the gap between the game and HTML content.
+
+**Are they really functions, though?** Actually, no. They are **instructions**. They explain to the client what do to with given information, thus computing happens client-side, not server-side.
+
+A very important use of `browse()`, which is often overlooked is caching files to clients. 
+
+> [!NOTE] Client
+> In the context of this topic we are referring to the client, not the type `/client`. 
+
+
+The main difference, and what tells them apart, is `Browse()` is mostly used to "create" or "open" a new windowframe,. `output()` is used to communicate with a browser which is already created.
 ## Tips & Hints
 <details>
   <summary>BYOND Web Interface</summary>
