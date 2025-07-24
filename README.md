@@ -31,7 +31,7 @@ It looks like `(client) << browse(data, "window.browser", params=null)`.
 > `browse()` `data` in `"window1.browser1` to `client`.
 _though we will discuss `browse()` more in detail later._
 
-With exception of building the HTML file, DreamMaker isn't concerned with data's content, it only cares for where to put it. The browser on the other hand do care about _data_. It takes whatever is inside _data_ and renders it as any web browser does. It accepts HTML, CSS and JS by default. Our job becomes to format _data_ to create a valid html document, tailored to our needs.
+With exception of building the HTML file, DreamMaker isn't concerned about were to put content, it only cares for which window and browser to use. The browser on the other hand do care about the data-content. It takes whatever is inside _data_ and renders it as any web browser does. It accepts HTML, CSS and JS by default. **Our** job is to combine DM and JS to format _data_ and create a valid html document, tailored to our needs.
 
 **Lets create an example:**
 ```c
