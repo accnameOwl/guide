@@ -22,14 +22,14 @@ Welcome!
 ## 1: The Relation between DreamMaker and Javascript
 > [!IMPORTANT]
 > .dmf info:
-> `window="is-visible=0,is-default=0"`, 
-> `window.browser="is-visible=1, is-default=0"`
+> `window1="is-visible=0,is-default=0"`, 
+> `window1.browser="is-visible=1, is-default=0"`
 > 
 In large part, browsing HTML documents to clients is essentially "Take this text" and "send to 'this' client". The client recieves the payload, along with a task description.
-It looks like `(client) << browse(data, "window.browser", params=null)`. `browse()` is the task descriptor, which tells `client` to browse `data` with the interface element `window1.browser1`.
+It looks like `(client) << browse(data, "window1.browser1", params=null)`. `browse()` is the task descriptor, which tells `client` to browse `data` with the interface element `window1.browser1`.
 _though we will discuss `browse()` more in detail later._
 
-Essentially, DreamMaker isn't concerned with data's content, it only cares for where to put it. `"window.browser"` element on the other hand do care about _data_. It takes whatever is inside _data_ and renders it as any web browser does. It accepts HTML, CSS and JS by default. Our job becomes to format _data_ to create a valid html document, tailored to our needs.
+Essentially, DreamMaker isn't concerned with data's content, it only cares for where to put it. `"window1.browser1"` element on the other hand do care about _data_. It takes whatever is inside _data_ and renders it as any web browser does. It accepts HTML, CSS and JS by default. Our job becomes to format _data_ to create a valid html document, tailored to our needs.
 
 **Lets create an example:**
 ```c
@@ -41,19 +41,33 @@ client
 	verb
 		test_browser()
 			set name = "Browse"
-			
+
 			var/body = {"
-				<!DOCTYPE html>
-				<html>
-					<head>
-					</head>
-					<body>
-						<div>Hello [usr.name]</div>
-					</body>
-				</html>
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<title>Some title</title>
+		</head>
+		<body>
+			<div>Hello <span id='user-name'>[usr.name]</span></div>
+
+			<script>
+
+			function ChangeName(name) {
+				document.getElementById('user-name').innerHTML = name;
+				callback("Name has been changed");
+			}
+			
+			function callback(text){
+				BYOND.command("response " + encodeURIComponent(text));
+			}
+
+			</script>
+		</body>
+	</html>
 			"}
-			winset(src, "window", "is-visible=true")
-			src << browse(body, "window=window")
+			src << browse(body, "window=window1.browser1")
+			winshow(src, "window1", 1)
 ```
 > [!NOTE]
 > Make note of how we stay in `client` type. More on this later...
