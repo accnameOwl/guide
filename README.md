@@ -117,8 +117,8 @@ client
 ```
 
 ## 2. Data Referencing
-Let us talk about referencing data to our browser.
-referenced data is stringyfied to the HTML document at runtime. In almost all cases the standard string format applies: `"[object.data]`.
+Let us talk about referencing data to our browser.<br>
+referenced data is stringyfied to the HTML document at runtime. In almost all cases the standard string format applies: `"[object.data]"`.<br>
 However, in other cases you want images. You can use image elements in this case: `<img src="\ref[object.appearance]"`. This applies to `/image`, `/icon` or image files(.png, .jpg, .svg, etc...).
 
 **The flow of data**
@@ -127,7 +127,7 @@ However, in other cases you want images. You can use image elements in this case
 3. The browser's javascript interracts with the document, deciding what to do with data and where to put it.
 
 **Let us take a look at an example**
-We want to display a small, simple character screen. It contains player's name and appearance.
+We want to display a small, simple character screen. It contains player's name and appearance.<br>
 Lets build on our previous example, by adding an image and a function that changes it's appearance.
 
 We need a more generalized javascript function which can handle multiple arguments by parsing params in key=value pairs.<br>
@@ -166,7 +166,7 @@ var/data = @{"
 	...
 "}
 ```
-As mentioned before, any reference to an _image_ is referenced as such: `\ref[]`. This references the rsc memory location of the variable your passing.
+As mentioned before, any reference to an _image_ is referenced as such: `\ref[]`. This references the rsc memory location of the variable your passing.<br>
 The browser looks for that image reference, and loads the image directly. Knowing this, lets build our verb, which changes the image.
 > [!NOTE]
 > The HTML document inherits from appearance's size. If an icon is 32x32, image is scaled 32x32px;
