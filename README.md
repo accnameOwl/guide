@@ -22,7 +22,6 @@
 
    
 ## 1: The Relation between DreamMaker and Javascript
-<details>
 	
 > [!IMPORTANT]
 > .dmf info:<br>
@@ -110,6 +109,7 @@ Let us construct an example which changes inner contents of a tag, then responds
 > Encoding between DreamSeeker & Webview2(browser) is essential to ensure special characters are escaped.
 >> BYONDs web interface encodes by default.
 
+
 Let us take a look at DreamMakers side of things.<br>
 Introducing `output()` to the equation, we can specifically call functions within the browsed document. 
 ```c
@@ -124,11 +124,10 @@ client
 			src << "browser callback: [url_decode(text)]"
 ```
 This should output `browser callback: id 'user-name' has been changed to '[new_name]'`.
-</details>
+
 
 
 ## 2. Data Referencing
-<details>
 
 Let us talk about referencing data to our browser.<br>
 Referenced data is converted to string at runtime, before being passed to browser. The standard string formatting in DM is: `"[object.data]"`.<br>
@@ -198,11 +197,9 @@ client
 			src << output(JS("user-name"=new_name, "user-appearance"="\ref[m.appearance]"), "window1.browser1:changeValueById")
 ```
 
-</details>
 
 
 ## Browse() & Output()
-<details>
 
 Let us delve a bit deeper into things and talk about key features and differences between `browse()` and `output()`.
 
@@ -224,7 +221,6 @@ A very important use of `browse()`, which is often overlooked is caching files t
 
 
 The main difference, and what tells them apart, is `Browse()` is mostly used to "create" or "open" a new windowframe,. `output()` is used to communicate with a browser which is already created.
-</details>
 
 
 ## Tips & Hints
