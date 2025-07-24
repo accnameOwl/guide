@@ -120,8 +120,8 @@ client
 Let us talk about referencing data to our browser.<br>
 Referenced data is converted to string at runtime, before being browsed. The standard string formatting in DM is: `"[object.data]"`.<br>
 In some cases you want to reference appearances or images. You need a memory reference in that case: `<img src="\ref[object.appearance]"`. <br>
-This applies to `/image`, `/icon` or image files(.png, .jpg, .svg, etc...). `\ref[]` references a memory location in the rsc<br>
-The browser looks for that image reference, and loads the image directly. Knowing this, lets build our verb, which changes the image.
+This applies to `/image`, `/icon` or image files(.png, .jpg, .svg, etc...). `\ref[]` references a memory location in the RSC.<br>
+The browser fetches the image directly from RSC.
 
 **The flow of data**
 1. DreamMaker arranges data and formats it.
@@ -135,7 +135,7 @@ Lets build on our previous example, by adding an image and a function that chang
 We need a more generalized javascript function which can handle multiple arguments by parsing params in key=value pairs.<br>
 > [!TIP]
 > DM allows the use of special characters in stringblocks as such: `@{""}`
- 
+ **JS**
 ```js
 var/data = @{"
 	...
@@ -170,7 +170,7 @@ var/data = @{"
 ```
 > [!NOTE]
 > The HTML document inherits from appearance's size. If an icon is 32x32, image is scaled 32x32px;
-
+**DM**
 ```c
 #define JS(T...) list2params(list(T))
 client
