@@ -20,7 +20,9 @@
 6. Debugging & Tools
 7. Building an inventory
 
-## 1: The Relation between DreamMaker and Javascript
+<details>
+  <summary>B## 1: The Relation between DreamMaker and Javascript</summary>
+
 > [!IMPORTANT]
 > .dmf info:<br>
 > `window1="is-visible=0,is-default=0"`<br>
@@ -123,7 +125,10 @@ client
 This should output `browser callback: id 'user-name' has been changed to '[new_name]'`.
 
 
-## 2. Data Referencing
+
+<details>
+  <summary>## 2. Data Referencing</summary>
+
 Let us talk about referencing data to our browser.<br>
 Referenced data is converted to string at runtime, before being passed to browser. The standard string formatting in DM is: `"[object.data]"`.<br>
 In some cases you want to reference appearances or images.You can refer to images by typing "\ref" before a datavalue, like so: `"\ref[object.appearance]"`. <br>
@@ -193,7 +198,9 @@ client
 ```
 
 
-## Browse() & Output()
+<details>
+  <summary>## Browse() & Output()</summary>
+
 Let us delve a bit deeper into things and talk about key features and differences between `browse()` and `output()`.
 
 > [!NOTE]
