@@ -67,7 +67,10 @@ To accomplish this, we need two things:
 - A html hook for Javascript to recognize and change
 - A function wich edits within the hook.
 
-We create a hook by using element id. `element.id` is an identifier specific to one element.Javascript returns an element by using `document.getElementById()`.
+We can hook an element by using id. `element.id` is an identifier specific to one element. 
+`getElementById()` returns an element, which becomes our hooked element.
+
+Let us construct an example, which not only changes contents within an element, but also creates a simple response to DM.
 
 ```html
 <!DOCTYPE html>
