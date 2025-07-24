@@ -73,18 +73,27 @@ Lets look at the html code.
 		<div>Hello <span id="user-name">[usr.name]</span></div>
 		<script>
 			function ChangeName(new_name) {
-				document.getElementById("user-name").innerHTML = new_name;
+				document.getElementById("user-name").innerHTML = decodeURIComponent(new_name);
 			}
 		</script>						
 	</body>
 </html>
 ```
-1. Added `<span id="user-name"></span>`, which acts as a hook, which javascript recognizes by `document.getElementById(id)`. It returns the element with corresponding `id`.
-2. HTML elements has a datapoint called `innerHTML`, which is whatever is inside `<. id="">*</.>`
-3. We change the inner body of `span id="user-name"`.
+> 1. Added `<span id="user-name"></span>`, which acts as a hook, which javascript recognizes by `document.getElementById(id)`. It returns the element with corresponding `id`.
+> 2. HTML elements has a datapoint called `innerHTML`, which is whatever is inside `<. id="">*</.>`
+> 3. We change the inner body of `span id="user-name"`.
+
+> [!TIP]
+> Always encode/decode from DreamMaker to Browser!
+>
+> encoding between DreamSeeker & Webview2(browser) is essential to ensure special characters are escaped.
+>
+> **Example:** no encoding:`space=%20`, with encoding: `space=" "`. 
 
 Then we need something that calls that JS function from DreamMaker. This is were `output()` comes in...
 ```c
-
-
+client
+	verb
+		change_name(new_name as text)
+			usr << output(new_name, "window1.browser1:ChangeName")
 ```
