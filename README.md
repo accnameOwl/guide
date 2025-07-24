@@ -157,7 +157,6 @@ Before we make that happen, we need to tailor our document a bit more. We need a
 
 ```js
 @{"
-	...
 	<script>
 		function setValueById(param) {
 			// Create anonymous object, which becomes a body to param
@@ -183,7 +182,6 @@ Before we make that happen, we need to tailor our document a bit more. We need a
 			}
 		}
 	</script>
-	...
 "}
 ```
 > [!TIP]
