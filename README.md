@@ -30,7 +30,7 @@ In large part, browsing HTML documents to clients is essentially "Take this text
 It looks like `(client) << browse(data, "window1.browser1", params=null)`. `browse()` is the task descriptor, which tells `client` to browse `data` with the interface element `window1.browser1`.
 _though we will discuss `browse()` more in detail later._
 
-Essentially, DreamMaker isn't concerned with data's content, it only cares for where to put it. `"window1.browser1"` element on the other hand do care about _data_. It takes whatever is inside _data_ and renders it as any web browser does. It accepts HTML, CSS and JS by default. Our job becomes to format _data_ to create a valid html document, tailored to our needs.
+With exception of building the HTML file, DreamMaker isn't concerned with data's content, it only cares for where to put it. The browser on the other hand do care about _data_. It takes whatever is inside _data_ and renders it as any web browser does. It accepts HTML, CSS and JS by default. Our job becomes to format _data_ to create a valid html document, tailored to our needs.
 
 **Lets create an example:**
 ```c
