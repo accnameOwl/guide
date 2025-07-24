@@ -37,6 +37,7 @@ With exception of building the HTML file, DreamMaker isn't concerned about were 
 ```c
 mob
 	Login()
+		..()
 		name = "Average Joe"
 
 client
