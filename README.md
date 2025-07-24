@@ -65,10 +65,9 @@ To accomplish this, we need two things:
 - A html hook for Javascript to recognize and change
 - A function wich edits within the hook.
 
-We create a hook by using element id. `element.id` is an identifier specific to one element.Javascript returns an element by using `document.getElementById()`. With DreamMaker there is a flaw which should be known. `const elem = document.getElementById("_e");elem.innerHTML="I do not change innerHTML of element '_e'"`. You have to make statements directly to the returned value, i.e document.getElementById("_e").innerHTML = "DOES change innerHTML".
+We create a hook by using element id. `element.id` is an identifier specific to one element.Javascript returns an element by using `document.getElementById()`.
 
 ```html
-<!--var/body-->
 <!DOCTYPE html>
 <html>
 	<head>
@@ -76,22 +75,34 @@ We create a hook by using element id. `element.id` is an identifier specific to 
 	<body>
 		<div>Hello <span id="user-name">[usr.name]</span></div>
 		<script>
-			function ChangeName(new_name) {
-				document.getElementById("user-name").innerHTML = decodeURIComponent(new_name);
+			<!-- Recieves data from DM -->
+			function ChangeInnerHTML(id, new_name) {
+				const elem = document.getElementById("user-name");
+				elem.innerHTML = decodeURIComponent(new_name);
+			}
+
+			<!-- responds with a callback function.
+			function callback(text) {
+				<!-- A new feature is the BYOND handler, which handles requests and responses between JS and DM -->
+				BYOND.command("response " + text);
 			}
 		</script>						
 	</body>
 </html>
 ```
 > [!TIP]
-> Always encode/decode from DreamMaker to Browser!
+> Encode/Decode from DreamMaker to Browser!
 > encoding between DreamSeeker & Webview2(browser) is essential to ensure special characters are escaped.
-> **Example:** no encoding:`space=%20`, with encoding: `space=" "`. 
+> **Example:** no encoding:`space=%20`, with encoding: `space=" "`.
+> (!) BYOND web handler already does this for you.
 
-Then we need something that calls that JS function from DreamMaker. This is were `output()` comes in...
+Let us take a look at DreamMaker's side of this. This is were `output()` comes in...
 ```c
 client
 	verb
 		change_name(new_name as text)
-			usr << output(new_name, "window1.browser1:ChangeName")
+			usr << output(url_encode(list2params(list("user-name", new_name)), "window1.browser1:ChangeInnerID")
+
+		response(text as text)
+			src << "browser callback: [url_decode(text)]"
 ```
