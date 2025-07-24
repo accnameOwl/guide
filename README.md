@@ -143,9 +143,12 @@ Before we make that happen, we need to tailor our document a bit more. We need a
 > DM allows the use of special characters in stringblocks as such: `@{""}`
 
 ```js
-var/data = @{"
+var/body = {"
 	...
-	<div><img id='user-appearance'></img>Name: <span id='user-name'>[usr.name]</span></div>
+		<div><img id='user-appearance'></img>Name: <span id='user-name'>[usr.name]</span></div>
+"}
+body += @{"
+	...
 	<script>
 		function setValueById(param) {
 			// Create anonymous object, which becomes a body to param
