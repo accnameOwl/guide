@@ -118,8 +118,10 @@ client
 
 ## 2. Data Referencing
 Let us talk about referencing data to our browser.<br>
-referenced data is stringyfied to the HTML document at runtime. In almost all cases the standard string format applies: `"[object.data]"`.<br>
-However, in other cases you want images. You can use image elements in this case: `<img src="\ref[object.appearance]"`. This applies to `/image`, `/icon` or image files(.png, .jpg, .svg, etc...).
+Referenced data is converted to string at runtime, before being browsed. The standard string formatting in DM is: `"[object.data]"`.<br>
+In some cases you want to reference appearances or images. You need a memory reference in that case: `<img src="\ref[object.appearance]"`. <br>
+This applies to `/image`, `/icon` or image files(.png, .jpg, .svg, etc...). `\ref[]` references a memory location in the rsc<br>
+The browser looks for that image reference, and loads the image directly. Knowing this, lets build our verb, which changes the image.
 
 **The flow of data**
 1. DreamMaker arranges data and formats it.
@@ -166,8 +168,6 @@ var/data = @{"
 	...
 "}
 ```
-As mentioned before, any reference to an _image_ is referenced as such: `\ref[]`. This references the rsc memory location of the variable your passing.<br>
-The browser looks for that image reference, and loads the image directly. Knowing this, lets build our verb, which changes the image.
 > [!NOTE]
 > The HTML document inherits from appearance's size. If an icon is 32x32, image is scaled 32x32px;
 
