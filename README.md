@@ -62,15 +62,15 @@ client
 > - `<!DOCTYPE html>` is a **requirement** at the top of our documents.
 
 Great! Now we need some **Javascript!**
-Let's create a function were we _change_ the value of `usr.name`. 
+Let's create a function were we _change_ the value of `usr.name`. <br>
 To accomplish this, we need two things: 
 - A html hook for Javascript to recognize and change
 - A function wich edits within the hook.
 
-We can hook an element by using id. `element.id` is an individual identifier, to recognize specific elems. 
+We can hook an element by using id. `element.id` is an unique identifier we use to recognize specific elements. 
 `getElementById()` returns our 'hooked' element.
 
-Let us construct an example: It changes content of element and responds back with a command call.
+Let us construct an example, which changes content of element and responds back with a "command".
 
 ```html
 <!DOCTYPE html>
@@ -88,6 +88,8 @@ Let us construct an example: It changes content of element and responds back wit
 			}
 			
 			function responseToDM(text){
+				// response = client/verb/response(), text = text;
+				// BYOND.command("verb a r g s")
 				BYOND.command("response " + text);
 			}
 		</script>						
@@ -176,5 +178,7 @@ client
 ## Tips & Hints
 <details>
   <summary>BYOND Web Interface</summary>
-	functions: command, winset, winget
+	BYOND.command("verb arg1 arg2 ...");
+	BYOND.winset("id=control_id&property=value&...");
+	BYOND.winget("callback=js_cb&id=control_id&property=is-checked,size,background-color");
 </details>
