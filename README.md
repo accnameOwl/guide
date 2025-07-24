@@ -64,13 +64,14 @@ client
 Great! Now we need some **Javascript!**
 Let's create a function were we _change_ the value of `usr.name`. <br>
 To accomplish this, we need two things: 
-- A html hook for Javascript to recognize and change
-- A function wich edits within the hook.
+- A html hook for Javascript to recognize.
+- Get ourselfs a proper html element we can apply changes to.
+- A function which applies desired changes to our html element.
 
-We can hook an element by using id. `element.id` is an unique identifier we use to recognize specific elements. 
-`getElementById()` returns our 'hooked' element.
+With javascript we can hook to an element by identifying tag(`<></>`) ids. `(tag).id` is a unique identifier we use to recognize specific elements. <br>
+`getElementById()` looks for a tag within the document that has the specified id, and returns it as an element.
 
-Let us construct an example, which changes content of element and responds back with a "command".
+Let us construct an example which changes inner contents of a tag, then responds back to the client with a interface "command".
 
 ```html
 <!DOCTYPE html>
@@ -84,7 +85,7 @@ Let us construct an example, which changes content of element and responds back 
 			function changeInnerHTMLById(id, content) {
 				const elem = document.getElementById(id);
 				if(elem) { elem.innerHTML = id.value; }
-				callback("id '" + id + "' has been changed to '" + content + "'.");
+				responseToDM("id '" + id + "' has been changed to '" + content + "'.");
 			}
 			
 			function responseToDM(text){
@@ -97,12 +98,15 @@ Let us construct an example, which changes content of element and responds back 
 </html>
 ```
 > [!TIP]
-> Encode/Decode from DreamMaker to Browser!
-> encoding between DreamSeeker & Webview2(browser) is essential to ensure special characters are escaped.
-> **Example:** no encoding:`space=%20`, with encoding: `space=" "`.
-> (!) BYOND web interface already does this for you.
+> Encode/Decode data between DreamMaker to Browser!<br>
+> Encoding between DreamSeeker & Webview2(browser) is essential to ensure special characters are escaped.<br>
+> **Example:**<br>
+> - no encoding:`space="%20"`<br>
+> - with encoding: `space=" "`<br>
+> (!) The BYOND web interface already does this for you.
 
-Let us take a look at DreamMaker's side of this. This is were `output()` comes in...
+Let us take a look at DreamMaker's side of things.<br>
+Introducing `output()` to the equation, we can specifically call functions within the browsed document. 
 ```c
 // JS(...) helps us pass multiple arguments as a single string.
 #define JSArgs(T...) list2params(list(T))
@@ -111,32 +115,33 @@ client
 		change_name(new_name as text)
 			// Calls changeInnerHTMLById("user-name", new_name)
 			usr << output(JSArgs("user-name", new_name), "window1.browser1:changeInnerHTMLById")
-		// In essence outputs 'any' as text. What is important is decoding.
 		response(text as text)
 			src << "browser callback: [url_decode(text)]"
 ```
+This should output `browser callback: id 'user-name' has been changed to '[new_name]'`.
+
 
 ## 2. Data Referencing
 Let us talk about referencing data to our browser.<br>
-Referenced data is converted to string at runtime, before being browsed. The standard string formatting in DM is: `"[object.data]"`.<br>
-In some cases you want to reference appearances or images. You need a memory reference in that case: `<img src="\ref[object.appearance]"`. <br>
-This applies to `/image`, `/icon` or image files(.png, .jpg, .svg, etc...). `\ref[]` references a memory location in the RSC.<br>
-The browser fetches the image directly from RSC.
+Referenced data is converted to string at runtime, before being passed to browser. The standard string formatting in DM is: `"[object.data]"`.<br>
+In some cases you want to reference appearances or images.You can refer to images by typing "\ref" before a datavalue, like so: `"\ref[object.appearance]"`. <br>
+This applies to `/image`, `/icon` or image files(.png, .jpg, .svg, etc...). <br>
+`\ref[]` references an index in the games object table.<br>
+This tells the browser to look within the object tree, fetch the indexed data, which in this case returns `/image`.
 
 **The flow of data**
-1. DreamMaker arranges data and formats it.
-2. DreamMaker passes formated data to a JS function within a desired window browser.
-3. The browser's javascript interracts with the document, deciding what to do with data and where to put it.
+1. DreamMaker arranges data and formats it as a string. We call the result of that string parameters.
+2. DreamMaker passes parameters to a JS function within a desired window browser.
+3. The browser's javascript can use the params and interracts with the document, deciding what to do with the data and where to put it.
 
-**Let us take a look at an example**
-We want to display a small, simple character screen. It contains player's name and appearance.<br>
-Lets build on our previous example, by adding an image and a function that changes it's appearance.
+**Let us take a look at an example**<br>
+We want to display a small, simple character screen. It contains the players name and appearance.<br>
+Lets build on our previous example by adding an empty image tag and a function that changes it.
 
-We need a more generalized javascript function which can handle multiple arguments by parsing params in key=value pairs.<br>
+Before we make that happen, we need to tailor our document a bit more. We need a more generalized javascript function which can handle multiple arguments by parsing params in `[key,value]` pairs.<br>
 > [!TIP]
 > DM allows the use of special characters in stringblocks as such: `@{""}`
 
- **JS**
 ```js
 var/data = @{"
 	...
@@ -169,10 +174,9 @@ var/data = @{"
 	...
 "}
 ```
-> [!NOTE]
-> The HTML document inherits from appearance's size. If an icon is 32x32, image is scaled 32x32px.
+> [!TIP]
+> The HTML document inherits sizes from images by default. Icon of size 32x32 is rendered 32x32px in the browser.
 
-**DM**
 ```c
 #define JS(T...) list2params(list(T))
 client
