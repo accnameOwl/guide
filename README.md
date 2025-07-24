@@ -131,7 +131,10 @@ We want to display a small, simple character screen. It contains player's name a
 Lets build on our previous example, by adding an image and a function that changes it's appearance.
 > Image is empty by default.
 
-we need a more generalized javascript function, which can handle a list of arguments. This needs we need to parse the params list.
+We need a more generalized javascript function, which can handle a list of arguments. This needs we need to parse the params list.<br>
+> [!TIP]
+> When required to use special characers, like `[]`, in javascript, remember to note stringblocks as @{""}
+ 
 ```js
 <div><img id='user-appearance'></img>Name: <span id='user-name'>[usr.name]</span></div>
 <script>
