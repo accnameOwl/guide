@@ -79,15 +79,9 @@ Lets look at the html code.
 	</body>
 </html>
 ```
-> 1. Added `<span id="user-name"></span>`, which acts as a hook, which javascript recognizes by `document.getElementById(id)`. It returns the element with corresponding `id`.
-> 2. HTML elements has a datapoint called `innerHTML`, which is whatever is inside `<. id="">*</.>`
-> 3. We change the inner body of `span id="user-name"`.
-
 > [!TIP]
 > Always encode/decode from DreamMaker to Browser!
->
 > encoding between DreamSeeker & Webview2(browser) is essential to ensure special characters are escaped.
->
 > **Example:** no encoding:`space=%20`, with encoding: `space=" "`. 
 
 Then we need something that calls that JS function from DreamMaker. This is were `output()` comes in...
