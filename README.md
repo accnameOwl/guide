@@ -67,10 +67,10 @@ To accomplish this, we need two things:
 - A html hook for Javascript to recognize and change
 - A function wich edits within the hook.
 
-We can hook an element by using id. `element.id` is an identifier specific to one element. 
-`getElementById()` returns an element, which becomes our hooked element.
+We can hook an element by using id. `element.id` is an individual identifier, to recognize specific elems. 
+`getElementById()` returns our 'hooked' element.
 
-Let us construct an example, which not only changes contents within an element, but also creates a simple response to DM.
+Let us construct an example: It changes content of element and responds back with a command call.
 
 ```html
 <!DOCTYPE html>
@@ -87,7 +87,7 @@ Let us construct an example, which not only changes contents within an element, 
 				callback("id '" + id + "' has been changed to '" + content + "'.");
 			}
 			
-			function callback(text){
+			function responseToDM(text){
 				BYOND.command("response " + text);
 			}
 		</script>						
