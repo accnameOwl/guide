@@ -62,7 +62,7 @@ client
 > - `<!DOCTYPE html>` is a **requirement** at the top of our documents.
 
 Great! Now we need some **Javascript!**
-Let's create a function were we _change_ the value of usr name. 
+Let's create a function were we _change_ the value of `usr.name`. 
 To accomplish this, we need two things: 
 - A html hook for Javascript to recognize and change
 - A function wich edits within the hook.
