@@ -159,15 +159,11 @@ Before we make that happen, we need to tailor our document a bit more. We need a
 @{"
 	<script>
 		function setValueById(param) {
-			// Create anonymous object, which becomes a body to param
-			const obj = {};
-			// split "key1=value1&key2=value2", which returns an array.
 			// "key1=value1&key2=value2" -> ["key1=value1","key2=value2"]
 			const pairs = param.split("&");
 			
 			for (const pair of pairs) {
-				// itterate over array "pairs", and split them to two datapoints(key,value).
-				// "key1=value1" -> {key1=value1}
+				// "key1=value1" -> key1=value1
 				const [key,value] = pair.split("=");
 				
 				const elem = document.getElementById(key);
