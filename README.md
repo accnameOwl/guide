@@ -133,11 +133,11 @@ Lets build on our previous example, by adding an image and a function that chang
 
 We need a more generalized javascript function, which can handle a list of arguments. This needs we need to parse the params list.<br>
 > [!TIP]
-> When required to use special characers, like `[]`, in javascript, remember to note stringblocks in DM as `@{""}`
+> DM allows the use of special characters in stringblocks as such: `@{""}`
  
 ```js
 var/data = @{"
-...
+	...
 	<div><img id='user-appearance'></img>Name: <span id='user-name'>[usr.name]</span></div>
 	<script>
 		function setValueById(param) {
@@ -164,7 +164,7 @@ var/data = @{"
 			}
 		}
 	</script>
-...
+	...
 "}
 ```
 As mentioned before, any reference to an _image_ is referenced as such: `\ref[]`. This references the rsc memory location of the variable your passing.
