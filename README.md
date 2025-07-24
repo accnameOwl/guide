@@ -46,20 +46,9 @@ client
 				<!DOCTYPE html>
 				<html>
 					<head>
-						<title>Example</title>
 					</head>
 					<body>
-						<div>Hello <span id='user-name'>[usr.name]</span></div>
-						<script>
-							function ChangeName(name) {
-								document.getElementById('user-name').innerHTML = name;
-								callback("Name has been changed");
-							}
-							
-							function callback(text){
-								BYOND.command("response " + encodeURIComponent(text));
-							}
-						</script>
+						<div>Hello [usr.name]</div>
 					</body>
 				</html>
 			"}
@@ -72,10 +61,10 @@ client
 > `<!DOCTYPE html>` is a **requirement** at the top of our documents.
 
 Great! Now we need some **Javascript!**
-Let's create a function were we _change_ the value of usr name. To accomplish this, we need two things: A hook for Javascript to recognize and change, and the Javascript function.
+Let's create a function were we _change_ the value of usr name. To accomplish this, we need two things: A html hook for Javascript to recognize and change, and a function wich edits within the hook.
 Lets look at the html code.
 ```html
-<--var/body-->
+<!--var/body-->
 <!DOCTYPE html>
 <html>
 	<head>
@@ -90,6 +79,10 @@ Lets look at the html code.
 	</body>
 </html>
 ```
+1. Added `<span id="user-name"></span>`, which acts as a hook, which javascript recognizes by `document.getElementById(id)`. It returns the element with corresponding `id`.
+2. HTML elements has a datapoint called `innerHTML`, which is whatever is inside `<. id="">*</.>`
+3. We change the inner body of `span id="user-name"`.
+
 Then we need something that calls that JS function from DreamMaker. This is were `output()` comes in...
 ```c
 
