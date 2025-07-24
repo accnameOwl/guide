@@ -43,28 +43,25 @@ client
 			set name = "Browse"
 
 			var/body = {"
-	<!DOCTYPE html>
-	<html>
-		<head>
-			<title>Some title</title>
-		</head>
-		<body>
-			<div>Hello <span id='user-name'>[usr.name]</span></div>
-
-			<script>
-
-			function ChangeName(name) {
-				document.getElementById('user-name').innerHTML = name;
-				callback("Name has been changed");
-			}
-			
-			function callback(text){
-				BYOND.command("response " + encodeURIComponent(text));
-			}
-
-			</script>
-		</body>
-	</html>
+				<!DOCTYPE html>
+				<html>
+					<head>
+						<title>Example</title>
+					</head>
+					<body>
+						<div>Hello <span id='user-name'>[usr.name]</span></div>
+						<script>
+							function ChangeName(name) {
+								document.getElementById('user-name').innerHTML = name;
+								callback("Name has been changed");
+							}
+							
+							function callback(text){
+								BYOND.command("response " + encodeURIComponent(text));
+							}
+						</script>
+					</body>
+				</html>
 			"}
 			src << browse(body, "window=window1.browser1")
 			winshow(src, "window1", 1)
