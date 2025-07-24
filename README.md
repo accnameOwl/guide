@@ -58,7 +58,7 @@ client
 			winshow(src, "window1", 1)
 ```
 > [!NOTE]
-> - Make note of how we stay in `client` type. More on this later...
+> - We are making browser interraction `client`-specific. _More on this later..._
 > - `<!DOCTYPE html>` is a **requirement** at the top of our documents.
 
 Great! Now we need some **Javascript!**
