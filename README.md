@@ -135,6 +135,7 @@ Lets build on our previous example, by adding an image and a function that chang
 We need a more generalized javascript function which can handle multiple arguments by parsing params in key=value pairs.<br>
 > [!TIP]
 > DM allows the use of special characters in stringblocks as such: `@{""}`
+
  **JS**
 ```js
 var/data = @{"
@@ -169,7 +170,8 @@ var/data = @{"
 "}
 ```
 > [!NOTE]
-> The HTML document inherits from appearance's size. If an icon is 32x32, image is scaled 32x32px;
+> The HTML document inherits from appearance's size. If an icon is 32x32, image is scaled 32x32px.
+
 **DM**
 ```c
 #define JS(T...) list2params(list(T))
