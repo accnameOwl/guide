@@ -166,7 +166,7 @@ client
 		change_name_and_appearance(new_name as text)
 			// typehint to client.mob
 			var/mob/m = src.mob
-			src << output(JS("user-name"=n
+			src << output(JS("user-name"=new_name, "user-appearance"="\ref[m.appearance]"), "window1.browser1:changeValueById")
 ```
 
 ## Tips & Hints
