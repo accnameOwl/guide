@@ -23,6 +23,7 @@
    
 ## 1: The Relation between DreamMaker and Javascript
 <details>
+	
 > [!IMPORTANT]
 > .dmf info:<br>
 > `window1="is-visible=0,is-default=0"`<br>
