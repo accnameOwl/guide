@@ -22,8 +22,8 @@ Welcome!
 
 ## 1: The Relation between DreamMaker and Javascript
 > [!IMPORTANT]
-> .dmf info:
-> `window1="is-visible=0,is-default=0"`, 
+> .dmf info:<br>
+> `window1="is-visible=0,is-default=0"`<br>
 > `window1.browser="is-visible=1, is-default=0"`
 
 In large part, browsing HTML documents to clients is essentially "Take this text" and "send to 'this' client". The client recieves the payload, along with a task description.
@@ -59,7 +59,7 @@ client
 ```
 > [!NOTE]
 > - We are making browser interraction `client`-specific. _More on this later..._
-> - `<!DOCTYPE html>` is a **requirement** at the top of our documents.
+> - `<!DOCTYPE html>` is a **requirement** to all HTML documents.
 
 Great! Now we need some **Javascript!**
 Let's create a function were we _change_ the value of `usr.name`. <br>
