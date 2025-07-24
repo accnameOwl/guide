@@ -133,35 +133,39 @@ Lets build on our previous example, by adding an image and a function that chang
 
 We need a more generalized javascript function, which can handle a list of arguments. This needs we need to parse the params list.<br>
 > [!TIP]
-> When required to use special characers, like `[]`, in javascript, remember to note stringblocks as @{""}
+> When required to use special characers, like `[]`, in javascript, remember to note stringblocks in DM as `@{""}`
  
 ```js
-<div><img id='user-appearance'></img>Name: <span id='user-name'>[usr.name]</span></div>
-<script>
-	function setValueById(param) {
-		// Create anonymous object, which becomes a body to param
-		const obj = {};
-		// split "key1=value1&key2=value2", which returns an array.
-		// "key1=value1&key2=value2" -> ["key1=value1","key2=value2"]
-		const pairs = param.split("&");
-		
-		for (const pair of pairs) {
-			// itterate over array "pairs", and split them to two datapoints(key,value).
-			// "key1=value1" -> {key1=value1}
-			const [key,value] = pair.split("=");
+var/data = @{"
+...
+	<div><img id='user-appearance'></img>Name: <span id='user-name'>[usr.name]</span></div>
+	<script>
+		function setValueById(param) {
+			// Create anonymous object, which becomes a body to param
+			const obj = {};
+			// split "key1=value1&key2=value2", which returns an array.
+			// "key1=value1&key2=value2" -> ["key1=value1","key2=value2"]
+			const pairs = param.split("&");
 			
-			const elem = document.getElementById(key);
-			
-			//Create an exception to image elements, as we aren't changing innerHTML.
-			if(elem.tagName == "IMG") {
-				// set src directly.
-				elem.src = value;
-			} else {
-				elem.innerHTML = value;
+			for (const pair of pairs) {
+				// itterate over array "pairs", and split them to two datapoints(key,value).
+				// "key1=value1" -> {key1=value1}
+				const [key,value] = pair.split("=");
+				
+				const elem = document.getElementById(key);
+				
+				//Create an exception to image elements, as we aren't changing innerHTML.
+				if(elem.tagName == "IMG") {
+					// set src directly.
+					elem.src = value;
+				} else {
+					elem.innerHTML = value;
+				}
 			}
 		}
-	}
-</script>
+	</script>
+...
+"}
 ```
 As mentioned before, any reference to an _image_ is referenced as such: `\ref[]`. This references the rsc memory location of the variable your passing.
 The browser looks for that image reference, and loads the image directly. Knowing this, lets build our verb, which changes the image.
