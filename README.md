@@ -24,7 +24,7 @@ Welcome!
 > [!IMPORTANT]
 > .dmf info:<br>
 > `window1="is-visible=0,is-default=0"`<br>
-> `window1.browser="is-visible=1, is-default=0"`
+> `window1.browser1="is-visible=1, is-default=0"`
 
 In large part, browsing HTML documents to clients is essentially "Take this text" and "send to 'this' client". The client recieves the payload, along with a task description.
 It looks like `(client) << browse(data, "window.browser", params=null)`. 
