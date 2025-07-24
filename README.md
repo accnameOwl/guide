@@ -22,14 +22,14 @@ Welcome!
 ## 1: The Relation between DreamMaker and Javascript
 > [!IMPORTANT]
 > .dmf info:
-> `window1="is-visible=0,is-default=0"`, 
-> `window1.browser1="is-visible=1, is-default=0"`
+> `window="is-visible=0,is-default=0"`, 
+> `window.browser="is-visible=1, is-default=0"`
 > 
 In large part, browsing HTML documents to clients is essentially "Take this text" and "send to 'this' client". The client recieves the payload, along with a task description.
-It looks like `(client) << browse(data, "window1.browser1", params=null)`. `browse()` is the task descriptor, which tells `client` to browse `data` with the interface element `window1.browser1`.
+It looks like `(client) << browse(data, "window.browser", params=null)`. `browse()` is the task descriptor, which tells `client` to browse `data` with the interface element `window1.browser1`.
 _though we will discuss `browse()` more in detail later._
 
-Essentially, DreamMaker isn't concerned with data's content, it only cares for where to put it. The `"window1.browser1"` element on the other hand do care about _data_. It takes whatever is inside _data_ and renders it as any web browser does. It accepts HTML, CSS and JS by default. Our job becomes to format _data_ to create a valid html document, tailored to our needs.
+Essentially, DreamMaker isn't concerned with data's content, it only cares for where to put it. `"window.browser"` element on the other hand do care about _data_. It takes whatever is inside _data_ and renders it as any web browser does. It accepts HTML, CSS and JS by default. Our job becomes to format _data_ to create a valid html document, tailored to our needs.
 
 **Lets create an example:**
 ```c
@@ -52,8 +52,8 @@ client
 					</body>
 				</html>
 			"}
-			winset(src, "window1", "is-visible=true")
-			src << browse(body, "window=window1")
+			winset(src, "window", "is-visible=true")
+			src << browse(body, "window=window")
 ```
 > [!NOTE]
 > Make note of how we stay in `client` type. More on this later...
