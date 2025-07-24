@@ -18,6 +18,7 @@ Welcome!
 4. Server to Client
 5. Runtime Concerns
 6. Debugging & Tools
+7. Building an inventory
 
 ## 1: The Relation between DreamMaker and Javascript
 > [!IMPORTANT]
@@ -76,14 +77,13 @@ We create a hook by using element id. `element.id` is an identifier specific to 
 		<div>Hello <span id="user-name">[usr.name]</span></div>
 		<script>
 			<!-- Recieves data from DM -->
-			function ChangeInnerHTML(id, new_name) {
-				const elem = document.getElementById("user-name");
-				elem.innerHTML = decodeURIComponent(new_name);
+			function changeInnerHTMLById(id, content) {
+				const elem = document.getElementById(id);
+				if(elem) { elem.innerHTML = id.value; }
+				callback("id '" + id + "' has been changed to '" + content + "'.");
 			}
-
-			<!-- responds with a callback function.
-			function callback(text) {
-				<!-- A new feature is the BYOND handler, which handles requests and responses between JS and DM -->
+			
+			function callback(text){
 				BYOND.command("response " + text);
 			}
 		</script>						
@@ -94,15 +94,83 @@ We create a hook by using element id. `element.id` is an identifier specific to 
 > Encode/Decode from DreamMaker to Browser!
 > encoding between DreamSeeker & Webview2(browser) is essential to ensure special characters are escaped.
 > **Example:** no encoding:`space=%20`, with encoding: `space=" "`.
-> (!) BYOND web handler already does this for you.
+> (!) BYOND web interface already does this for you.
 
 Let us take a look at DreamMaker's side of this. This is were `output()` comes in...
 ```c
+// JS(...) helps us pass multiple arguments as a single string.
+#define JSArgs(T...) list2params(list(T))
 client
 	verb
 		change_name(new_name as text)
-			usr << output(url_encode(list2params(list("user-name", new_name)), "window1.browser1:ChangeInnerID")
-
+			// Calls changeInnerHTMLById("user-name", new_name)
+			usr << output(JSArgs("user-name", new_name), "window1.browser1:changeInnerHTMLById")
+		// In essence outputs 'any' as text. What is important is decoding.
 		response(text as text)
 			src << "browser callback: [url_decode(text)]"
 ```
+
+## 2. Data Referencing
+Let us talk about referencing data to our browser.
+referenced data is stringyfied to the HTML document at runtime. In almost all cases the standard string format applies: `"[object.data]`.
+However, in other cases you want images. You can use image elements in this case: `<img src="\ref[object.appearance]"`. This applies to `/image`, `/icon` or image files(.png, .jpg, .svg, etc...).
+
+**The flow of data**
+1. DreamMaker arranges data and formats it.
+2. DreamMaker passes formated data to a JS function within a desired window browser.
+3. The browser's javascript interracts with the document, deciding what to do with data and where to put it.
+
+**Let us take a look at an example**
+We want to display a small, simple character screen. It contains player's name and appearance.
+Lets build on our previous example, by adding an image and a function that changes it's appearance.
+> Image is empty by default.
+
+we need a more generalized javascript function, which can handle a list of arguments. This needs we need to parse the params list.
+```js
+<div><img id='user-appearance'></img>Name: <span id='user-name'>[usr.name]</span></div>
+<script>
+	function setValueById(param) {
+		// Create anonymous object, which becomes a body to param
+		const obj = {};
+		// split "key1=value1&key2=value2", which returns an array.
+		// "key1=value1&key2=value2" -> ["key1=value1","key2=value2"]
+		const pairs = param.split("&");
+		
+		for (const pair of pairs) {
+			// itterate over array "pairs", and split them to two datapoints(key,value).
+			// "key1=value1" -> {key1=value1}
+			const [key,value] = pair.split("=");
+			
+			const elem = document.getElementById(key);
+			
+			//Create an exception to image elements, as we aren't changing innerHTML.
+			if(elem.tagName == "IMG") {
+				// set src directly.
+				elem.src = value;
+			} else {
+				elem.innerHTML = value;
+			}
+		}
+	}
+</script>
+```
+As mentioned before, any reference to an _image_ is referenced as such: `\ref[]`. This references the rsc memory location of the variable your passing.
+The browser looks for that image reference, and loads the image directly. Knowing this, lets build our verb, which changes the image.
+> [!NOTE]
+> The HTML document inherits from appearance's size. If an icon is 32x32, image is scaled 32x32px;
+
+```c
+#define JS(T...) list2params(list(T))
+client
+	verb
+		change_name_and_appearance(new_name as text)
+			// typehint to client.mob
+			var/mob/m = src.mob
+			src << output(JS("user-name"=n
+```
+
+## Tips & Hints
+<details>
+  <summary>BYOND Web Interface</summary>
+	functions: command, winset, winget
+</details>
