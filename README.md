@@ -129,9 +129,8 @@ However, in other cases you want images. You can use image elements in this case
 **Let us take a look at an example**
 We want to display a small, simple character screen. It contains player's name and appearance.
 Lets build on our previous example, by adding an image and a function that changes it's appearance.
-> Image is empty by default.
 
-We need a more generalized javascript function, which can handle a list of arguments. This needs we need to parse the params list.<br>
+We need a more generalized javascript function which can handle multiple arguments by parsing params in key=value pairs.<br>
 > [!TIP]
 > DM allows the use of special characters in stringblocks as such: `@{""}`
  
