@@ -235,40 +235,40 @@ There are a few hurdles we should wrap our brains around. Utilizing verbs to com
 <details><summary>params buffer</summary>
 	```
 	// Interface type		
-Ticker/proc/Tick()
-
-world
-	// all objects that should Tick(), /mob, /client, etc...
-	var/alist/tickers = alist()
+	Ticker/proc/Tick()
 	
-	Tick()
-		for(var/Ticker/t as anything in tickers)
-			t.Tick()
-	
-client
-	// add self to world.tickers, so Tick is called()
-	New()
-		if(..())
-			world.tickers += src 
-			
-	
-	proc
-		Tick()
-			OnTick()
-			EndTick()
+	world
+		// all objects that should Tick(), /mob, /client, etc...
+		var/alist/tickers = alist()
 		
-		OnTick()
-			// Regular tick behaviours go here.
+		Tick()
+			for(var/Ticker/t as anything in tickers)
+				t.Tick()
+		
+	client
+		// add self to world.tickers, so Tick is called()
+		New()
+			if(..())
+				world.tickers += src 
+				
+		
+		proc
+			Tick()
+				OnTick()
+				EndTick()
 			
-		EndTick()
-			if(length(update_buffer))
-				var/params = list2params(update_buffer)
-				src << output(params, "window1.browser1:setValueById")
-
-client
-	var/alist/update_buffer = alist()
-	proc/UpdateBufferValue(id, val)
-		update_buffer[id] = val
+			OnTick()
+				// Regular tick behaviours go here.
+				
+			EndTick()
+				if(length(update_buffer))
+					var/params = list2params(update_buffer)
+					src << output(params, "window1.browser1:setValueById")
+	
+	client
+		var/alist/update_buffer = alist()
+		proc/UpdateBufferValue(id, val)
+			update_buffer[id] = val
 
 	```
 </details>
