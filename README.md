@@ -232,7 +232,7 @@ There are a few hurdles we should wrap our brains around. Utilizing verbs to com
 3. Control procs and verbs should strictly be to src, not other targets.
 
 **Another very handy** idea is to collect changed data over time, then `output` the most recent state of data <u>once</i>.
-This is to avoid **multiple** output calls through duration of one Tick, when we only need the most recent. Lets elaborate with a hypothetical: "In the duration of one tick, health and mana changes a total of 6 times, but we only care about 2--the most recent".
+This is to avoid **multiple** output calls through duration of one Tick. We only care about the most recent state. Lets elaborate with a hypothetical: "In the duration of one tick, health and mana changes a total of 6 times, but we only care about 1--the most recent".
 We can use Ticker interface, then add a Tick() proc to `/client`. We check for updates once, and output **only** if there was any. 
 > [!NOTE]
 > We update changed variables with `UpdateBuffer("variable_name", "value")`.
