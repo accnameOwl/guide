@@ -232,21 +232,18 @@ There are a few hurdles we should wrap our brains around. Utilizing verbs to com
 3. Control procs and verbs should strictly be to src, not other targets.
 
 
-<details><summary>params buffer</summary>
+<details><summary>**params buffer**</summary>
 	```
-	// Interface type		
+			
 	Ticker/proc/Tick()
 	
 	world
-		// all objects that should Tick(), /mob, /client, etc...
 		var/alist/tickers = alist()
-		
 		Tick()
 			for(var/Ticker/t as anything in tickers)
 				t.Tick()
 		
 	client
-		// add self to world.tickers, so Tick is called()
 		New()
 			if(..())
 				world.tickers += src 
@@ -258,7 +255,6 @@ There are a few hurdles we should wrap our brains around. Utilizing verbs to com
 				EndTick()
 			
 			OnTick()
-				// Regular tick behaviours go here.
 				
 			EndTick()
 				if(length(update_buffer))
@@ -267,7 +263,7 @@ There are a few hurdles we should wrap our brains around. Utilizing verbs to com
 	
 	client
 		var/alist/update_buffer = alist()
-		proc/UpdateBufferValue(id, val)
+		proc/UpdateBuffer(id, val)
 			update_buffer[id] = val
 
 	```
