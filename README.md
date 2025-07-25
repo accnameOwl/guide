@@ -9,7 +9,8 @@
 ```                                      
 
 ## INTRODUCTION
-> [!WARNING] Create an introduction
+> [!WARNING]
+> Create an introduction
 
 ## CONTENTS
 1. The Relation between DreamMaker and Javascript
@@ -218,7 +219,60 @@ A very important use of `browse()`, which is often overlooked is caching files t
 
 The main difference, and what tells them apart, is `Browse()` is mostly used to "create" or "open" a new windowframe,. `output()` is used to communicate with a browser which is already created.
 
+## 4. Server to Client
 
+> [!IMPORTANT]
+> Explain how instructions are handled, and that browsed JS functions are handled client-side.
+> 
+## 5. Runtime Concerns
+
+There are a few hurdles we should wrap our brains around. Utilizing verbs to communicate data with clients is risky business... Handling data with verbs directly, i.e giving users access to provide direct communication with the browser **is dangerous**. Luckily, there are a few principles we can follow to avoid this problem.
+1. Limit verbs. Never generalize verb behaviour.
+2. Clients should not be allowed to decide which control frames to access.
+3. Control procs and verbs should strictly be to src, not other targets.
+
+
+<details><summary>params buffer</summary>
+	```
+	// Interface type		
+Ticker/proc/Tick()
+
+world
+	// all objects that should Tick(), /mob, /client, etc...
+	var/alist/tickers = alist()
+	
+	Tick()
+		for(var/Ticker/t as anything in tickers)
+			t.Tick()
+	
+client
+	// add self to world.tickers, so Tick is called()
+	New()
+		if(..())
+			world.tickers += src 
+			
+	
+	proc
+		Tick()
+			OnTick()
+			EndTick()
+		
+		OnTick()
+			// Regular tick behaviours go here.
+			
+		EndTick()
+			if(length(update_buffer))
+				var/params = list2params(update_buffer)
+				src << output(params, "window1.browser1:setValueById")
+
+client
+	var/alist/update_buffer = alist()
+	proc/UpdateBufferValue(id, val)
+		update_buffer[id] = val
+
+	```
+</details>
+   
 ## Tips & Hints
 <details>
   <summary>BYOND Web Interface</summary>
