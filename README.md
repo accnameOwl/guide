@@ -231,43 +231,45 @@ There are a few hurdles we should wrap our brains around. Utilizing verbs to com
 2. Clients should not be allowed to decide which control frames to access.
 3. Control procs and verbs should strictly be to src, not other targets.
 
+**Another very handy** idea is to collect changed data over time, then `output` the most recent state of data <u>once</i>.
+This is to avoid **multiple** output calls through duration of one Tick, when we only need the most recent. Lets elaborate with a hypothetical: "In the duration of one tick, health and mana changes a total of 6 times, but we only care about 2--the most recent".
+We can use Ticker interface, then add a Tick() proc to `/client`. We check for updates once, and output **only** if there was any. 
+> [!NOTE]
+> We update changed variables with `UpdateBuffer("variable_name", "value")`.
+```
+		
+Ticker/proc/Tick()
 
-<details><summary>**params buffer**</summary>
-	```
-			
-	Ticker/proc/Tick()
+world
+	var/alist/tickers = alist()
+	Tick()
+		for(var/Ticker/t as anything in tickers)
+			t.Tick()
 	
-	world
-		var/alist/tickers = alist()
+client
+	New()
+		if(..())
+			world.tickers += src 
+			
+	
+	proc
 		Tick()
-			for(var/Ticker/t as anything in tickers)
-				t.Tick()
-		
-	client
-		New()
-			if(..())
-				world.tickers += src 
-				
-		
-		proc
-			Tick()
-				OnTick()
-				EndTick()
-			
 			OnTick()
-				
 			EndTick()
-				if(length(update_buffer))
-					var/params = list2params(update_buffer)
-					src << output(params, "window1.browser1:setValueById")
-	
-	client
-		var/alist/update_buffer = alist()
-		proc/UpdateBuffer(id, val)
-			update_buffer[id] = val
+		
+		OnTick()
+			
+		EndTick()
+			if(length(update_buffer))
+				var/params = list2params(update_buffer)
+				src << output(params, "window1.browser1:setValueById")
 
-	```
-</details>
+client
+	var/alist/update_buffer = alist()
+	proc/UpdateBuffer(id, val)
+		update_buffer[id] = val
+
+```
    
 ## Tips & Hints
 <details>
