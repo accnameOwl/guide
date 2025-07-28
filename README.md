@@ -10,7 +10,7 @@
 
 ## INTRODUCTION
 **Originally,** BYOND never intended to include 'browser-based' interface systems. The original idea was for developers to use built-in behaviours, like _mouseclick_, _mousedrag_, _client.screen_, etc... But with recent changes, and the addition of WebView2, it changes things. Despite this tutor, I encourage you to try creating an object-on-screen based interface. Let's just say it is "the intended" way, while using browser elements to partially fulfill a task is _"sort of"_ frowned upon.<br>
-Alas, People can think what they want. The important part is: You should do what you want to do. <br>
+Alas, People can think what they want. The important part is: You should do what you want to do. _Some of the benefits by using browsers comes with really interesting/benefitial results._ <br>
 The really cool thing with recent changes to browsers is how much more integrated the whole 'browse html' package has become. There used to be **very little support** from the DM side of things, though this has been changed for the better.
 That being said, lets continue with the tutor...
 
@@ -229,14 +229,23 @@ The main difference, and what tells them apart, is `Browse()` is mostly used to 
 > 
 ## 5. Runtime Concerns
 
+#### Safety
 There are a few hurdles we should wrap our brains around. Utilizing verbs to communicate data with clients is risky business... Handling data with verbs directly, i.e giving users access to provide direct communication with the browser **is dangerous**. Luckily, there are a few principles we can follow to avoid this problem.
 1. Limit verbs. Never generalize verb behaviour.
 2. Clients should not be allowed to decide which control frames to access.
 3. Control procs and verbs should strictly be to src, not other targets.
 
-**Another very handy** idea is to collect changed data over time, then `output` the most recent state of data <u>once</i>.
-This is to avoid **multiple** output calls through duration of one Tick. We only care about the most recent state. Lets elaborate with a hypothetical: "In the duration of one tick, health and mana changes a total of 6 times, but we only care about 1--the most recent".
-We can use Ticker interface, then add a Tick() proc to `/client`. We check for updates once, and output **only** if there was any. 
+#### Server-to-client
+Let us start by explaining DM. The gameserver(DreamDaemon) sends the current state of world to clients. The client uses that information to take action, which in turn sends a response to the server of changes made. The gameserver recieves that change, does calculations and changes then applies it to a new world state. This is part of world.tick behaviour(built-in). What is important to this is that server-client traffic always communicates packages. It knows when data has been recieved, processed and responded upon. By adding browser to the equation, this changes. Javascript through browsers doesn't guarantee a specific game-state, as it's not directly communicated with browser's contents. **A very** important usecase for browsing data is to 'only' browse data. It shouldn't directly act upon real-time game states(interract with combat, interaction with movement, etc...). What it **can** do for you, is relay and display information → relay information to user.<br>
+Of course, there is nothing wrong with providing responses back to dream maker, however... Be careful of having realtime-dependant data changed, as it can become time-faulty.
+
+#### Overhead
+Constructing an HTML document through DreamMaker can suck up valuable tick_usage. A tool to use is `browse_rsc()`. You can break HTML into stored data sections, relay data to client ahead of time then use it at a later date. This reduces both payload size and serverside CPU usage. 
+
+Another aspect is `browse()` and `output()`. You should mimimize their calls as much as possible. In some cases, multiple datapoints can change through the duration of one tick. Providing each change to clients is very uneccessary. **A very doable solution** to this problem is to collect changed data over time, then `output()` the most recent state of stored data <u>once</i>. This avoids **multiple** output calls through duration of one Tick. We only care to update clients of the 'most recent state'. <br>
+
+Lets elaborate with a hypothetical: "In the duration of one tick, health and mana changes a total of 6 times, but we only care about 1--the most recent".
+BYOND's builtin world.Tick() enables us to gain control of this behaviour. By adding `/client/proc/Tick` then call that through a a Ticker interface, we can store information, update stored information then relay once at the end of `/client/proc/Tick()`. We check for updates once, and output **only** if there was any changes.
 > [!NOTE]
 > We update changed variables with `UpdateBuffer("variable_name", "value")`.
 ```
