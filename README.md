@@ -258,14 +258,19 @@ Ticker/proc/Tick()
 world
 	var/alist/tickers = alist()
 	Tick()
+		// call Tick() to every Ticker as anything within tickers.
 		for(var/Ticker/t as anything in tickers)
 			t.Tick()
 	
 client
 	New()
 		if(..())
+			// add self to tickers, to get Tick() calls
 			world.tickers += src 
-			
+	Del()
+		// clean self from world.tickers, to avoid null ref
+		world.tickers -= src
+		..()
 	
 	proc
 		Tick()
@@ -273,14 +278,16 @@ client
 			EndTick()
 		
 		OnTick()
-			
+
+		//Making sure output update is at end of src.Tick()
 		EndTick()
 			if(length(update_buffer))
 				var/params = list2params(update_buffer)
 				src << output(params, "window1.browser1:setValueById")
 
 client
-	var/alist/update_buffer = alist()
+	// Create temporary buffer to updates
+	var/tmp/alist/update_buffer = alist()
 	proc/UpdateBuffer(id, val)
 		update_buffer[id] = val
 
