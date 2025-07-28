@@ -9,8 +9,11 @@
 ```                                      
 
 ## INTRODUCTION
-> [!WARNING]
-> Create an introduction
+**Originally,** BYOND never intended to include 'browser-based' interface systems. The original idea was for developers to use built-in behaviours, like _mouseclick_, _mousedrag_, _client.screen_, etc... But with recent changes, and the addition of WebView2, it changes things. Despite this tutor, I encourage you to try creating an object-on-screen based interface. Let's just say it is "the intended" way, while using browser elements to partially fulfill a task is _"sort of"_ frowned upon.<br>
+Alas, People can think what they want. The important part is: You should do what you want to do. <br>
+The really cool thing with recent changes to browsers is how much more integrated the whole 'browse html' package has become. There used to be **very little support** from the DM side of things, though this has been changed for the better.
+That being said, lets continue with the tutor...
+
 
 ## CONTENTS
 1. The Relation between DreamMaker and Javascript
@@ -23,7 +26,7 @@
 
    
 ## 1: The Relation between DreamMaker and Javascript
-	
+ 
 > [!IMPORTANT]
 > .dmf info:<br>
 > `window1="is-visible=0,is-default=0"`<br>
