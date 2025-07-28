@@ -251,7 +251,7 @@ Lets elaborate with a hypothetical:
 BYOND's builtin world.Tick() enables us to gain control of this behaviour. By adding `/client/proc/Tick` then call that through a a Ticker interface, we can store information, update stored information then relay once at the end of `/client/proc/Tick()`. We check for updates once, and output **only** if there was any changes.
 > [!NOTE]
 > We update changed variables with `UpdateBuffer("variable_name", "value")`.
-```
+```c
 		
 Ticker/proc/Tick()
 
