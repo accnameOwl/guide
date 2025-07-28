@@ -245,7 +245,8 @@ Constructing an HTML document through DreamMaker can suck up valuable tick_usage
 
 Another aspect is `browse()` and `output()`. You should mimimize their calls as much as possible. In some cases, datapoints can change multiple times through the duration of one tick. Relaying each change to clients is very uneccessary. **A very doable solution** to this problem is to collect changed data over time, then `output()` the most recent state of stored data <u>once</i>. This avoids **multiple** output calls through duration of one Tick. We only care to update clients of the 'most recent state'. <br>
 
-Lets elaborate with a hypothetical: "In the duration of one tick, health and mana changes a total of 6 times, but we only care about 1--the most recent".
+Lets elaborate with a hypothetical: 
+> In the duration of one tick, health and mana changes a total of 6 times, but we only care about 1--the most recent.
 BYOND's builtin world.Tick() enables us to gain control of this behaviour. By adding `/client/proc/Tick` then call that through a a Ticker interface, we can store information, update stored information then relay once at the end of `/client/proc/Tick()`. We check for updates once, and output **only** if there was any changes.
 > [!NOTE]
 > We update changed variables with `UpdateBuffer("variable_name", "value")`.
