@@ -254,22 +254,21 @@ BYOND's builtin world.Tick() enables us to gain control of this behaviour. By ad
 ```c
 		
 Ticker/proc/Tick()
-
+var/alist/tickers = alist()
 world
-	var/alist/tickers = alist()
 	Tick()
 		// call Tick() to every Ticker as anything within tickers.
-		for(var/Ticker/t as anything in tickers)
+		for(var/Ticker/t as anything in global.tickers)
 			t.Tick()
 	
 client
 	New()
 		if(..())
 			// add self to tickers, to get Tick() calls
-			world.tickers += src 
+			global.tickers += src 
 	Del()
 		// clean self from world.tickers, to avoid null ref
-		world.tickers -= src
+		global.tickers -= src
 		..()
 	
 	proc
